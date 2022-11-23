@@ -1,26 +1,44 @@
 # Sesame Coding Assignment
 
-### Build a Discord Questing Platform
+First we will need all these dependencies, in addition to node:
 
-Welcome to Sesame’s coding challenge, in which you will build a Questing Platform ([https://bit.ly/sesame-coding](https://bit.ly/sesame-coding)) that rewards people with coupon codes for joining a Discord server.
+"@discordjs/rest": "^1.3.0",
+"body-parser": "^1.20.1",
+"discord-api-types": "^0.37.19",
+"discord.js": "^14.6.0",
+"dotenv": "^16.0.3",
+"express": "^4.18.2",
+"expressjs": "^1.0.1",
+"mongodb": "^4.12.0",
+"web3": "^1.8.1"
 
-**Product Requirements**
+You will need to create a database in mongoDB called couponUsernames.
 
-- The user should be able to sign in on the webpage with their MetaMask wallet
-- Once they have connected their wallet, they will see a Quest which asks them to join a certain Discord server to win a coupon code. There will be a Join Discord button (that triggers the Discord joining flow) and a Verify button (that verifies if the user has successfully joined the specified Discord server).
-- Once the user successfully verifies that they have joined the Discord they should see a coupon code. For the purposes of this project, the coupon code can be a random 10 digit alphanumeric string.
-- The user’s state (whether they have verified, which coupon code they have received, etc) should be stored in a DB so that it persists if the user signs in with their wallet again or even on server restart. Multiple different users should be able to use this product at the same time.
-- The Quest details (title, description, cover image uri, discord server name, etc) and any API keys (discord, etc) should be easily settable in a .config OR .env file
-- The UI is not the primary focus of this assignment however it needs to be good enough and fully functional. Here is roughly how it should look like: [https://bit.ly/sesame-coding](https://bit.ly/sesame-coding)
+You will need to create a collection called usernames within that DB.
 
-**References**
+Next you can run 
 
-- Quest3 ([https://app.quest3.xyz/quest/691059696896696692](https://app.quest3.xyz/quest/691059696896696692)) can be used for reference for how the Join Discord flow and the verification should work. Feel free to use that as reference when designing your solution.
+`node app.js` 
 
-**Directions**
+You should see be able to load a webpage at localhost:3000
 
-- Take about 8 hours to work on this assignment. Please complete this exercise yourself, however feel free to Google and use other references.
-- Please fork this repository to start working on this project. Add a detailed README that provides easily understandable instructions on how to run your code on local machine.
-- This will be followed by a 45 min interview where you will be asked to explain your decisions and asked to describe about challenges and opportunities with your solution
-- In addition to correctness, we will be evaluating based on code structure, readability, and extensibility. It does not need to be over-engineered, however should be solid production level code.
-- Please reach out if you have any questions.
+If you input your discord username, then a discord bot will later be able to verify your username. It shold also give you a dummy verification code "iamhuman" to input into the discord server for the bot to verify.
+
+You will need to create a permissioned discord bot, which the following tutorial should help with:
+
+https://www.freecodecamp.org/news/create-a-discord-bot-with-javascript-nodejs/
+
+Once you have given your discord bot sufficient permissions, added the TOKEN, GUILD_ID and CLIENT_ID to your .env:
+
+You can run 
+
+`node discord.js`
+
+Next you can interact with the discord bot. It listens for messages, and if it finds a username that is in its mongodb, and the message matches the verification code, it will return a coupon code.
+
+An example test discord where this process played out can be found at:
+
+https://discord.gg/hmJjzWBv
+
+Bonus, if you uncomment some code in discord.js, run the register Command script, you can run /ping commands on the bot.
+
